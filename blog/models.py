@@ -1,6 +1,7 @@
 from datetime import datetime
+from flask_sqlalchemy import SQLAlchemy
 from blog import db, login_manager
-from flask_login import UserMixin
+from flask_login import UserMixin,LoginManager
 from werkzeug.security import generate_password_hash, check_password_hash
 
 class Post(db.Model):
