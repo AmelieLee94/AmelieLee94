@@ -108,14 +108,14 @@ def reset_request():
   return render_template('reset_request.html',title='reset request',form=form,legend='Reset Password')
 
 
-def send_mail(user):
-    token=user.get_token()
-    msg=Message('Password Reset Request',recipients=[user.email],sender='donoreply@limin.com')
-    msg.body=f'''To reset your password. Please follow the link below.
-    {url_for('reset_token',token=token,_external=True)}
-    If you have recieve email before. Please ignore this message.
-    '''
-    mail.send(msg)
+# def send_mail(user):
+#     token=user.get_token()
+#     msg=Message('Password Reset Request',recipients=[user.email],sender='donoreply@limin.com')
+#     msg.body=f'''To reset your password. Please follow the link below.
+#     {url_for('reset_token',token=token,_external=True)}
+#     If you have recieve email before. Please ignore this message.
+#     '''
+#     mail.send(msg)
 
 @app.route("/reset_password/<token>",methods=['GET','POST'])
 def reset_request_token(token):
