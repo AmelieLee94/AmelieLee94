@@ -34,4 +34,7 @@ app.config['MAIL_PASSWORD']='temppassword123!'
 
 mail=Mail(app)
 
+if __name__ == '__main__':
+    app.run(debug=True)
+
 from blog import routes
