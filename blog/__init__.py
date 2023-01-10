@@ -5,6 +5,10 @@ from flask_login import LoginManager
 from flask_ckeditor import CKEditor
 from flask_mail import Mail
 
+
+def create_app():
+    app = Flask(__name__)
+
 app = Flask(__name__) 
 
 ckeditor = CKEditor(app)
