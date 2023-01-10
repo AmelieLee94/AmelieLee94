@@ -38,4 +38,8 @@ login_manager.init_app(app)
 
 mail=Mail(app)
 
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
 from blog import routes
