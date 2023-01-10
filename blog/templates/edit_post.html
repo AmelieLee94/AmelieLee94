@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+<link href="/static/css/styles.css" rel="stylesheet">
+{% for message in get_flashed_messages() %}
+<body class="bg-light"> 
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+ {% endfor %}
+<h1>Edit Your Comment</h1>
+<br/>
+<div>
+    <form method="POST">
+        <div class="input-group">
+          {{ form.hidden_tag() }}
+          <h5>{{ form.title.label(class="form-label") }}</h5>
+        </div>
+        <div class="input-group mb-3">
+          {{ form.title(class="form-control") }}
+        </div>
+          <div class="input-group">
+          <h5>{{ form.slug.label(class="form-label") }}</h5>
+        </div>
+          <div class="input-group mb-3">
+          {{ form.slug(class="form-control") }}
+        </div>
+          <div class="input-group">
+          <h5>{{ form.content.label(class="form-label") }}</h5>
+        </div>
+          <div class="input-group mb-3">
+          {{ form.content(class="form-control",rows='5') }}
+        </div>
+          <div class="d-grid gap-2 d-md-block">
+            {{ form.submit(class=" btn btn btn-primary")}}
+            <a href="{{ url_for('posts')}}" class="btn btn-primary">Back to Comment List >></a>
+        </div>
+        </form> 
+        {{ ckeditor.load() }}
+ {{ ckeditor.config(name='content') }}
+</div>
+</div>      
+ </div>  
+</body>
+{% endblock content %}

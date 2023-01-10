@@ -1,16 +1,66 @@
-{% extends "layout.html" %}
+{% extends 'base.html' %}
 {% block content %}
-<form method="POST" action="">
-  {{ form.csrf_token }}
-  <p>{{ form.username.label }} {{ form.username }}</p>
-  <p>{{ form.confirm_username.label }} {{ form.confirm_username }}</p>
-  <p>{{ form.password.label }} {{ form.password }}</p>
-  <input type="submit" value="Register">
-</form>
-
-{% for error in form.username.errors %}
-  <span style="color: red;">[{{ error }}]</span>
-{% endfor %}
-
-
-{% endblock content %}
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/styles.css" rel="stylesheet">
+  <body class="bg-light"> 
+    <div class="container">
+      <div class="row mt-5">
+        <div class="col-lg-5 bg-white m-auto rounded-top wrapper">
+          <h2 class="text-center pt-3">Signup Now</h2>
+          <p class="text-center text-muted lead">Welcome to LiMin's Portfolio</p>        
+           {% for error in form.username.errors %}
+           <div class="alert alert-danger d-flex align-items-left" role="alert">
+            <div>
+              {{ error }}
+            </div>
+          </div>
+         {% endfor %} 
+         {% for message in get_flashed_messages() %} 
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+              {{ message }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          {% endfor %}
+         <form action="register" method="post">
+          <div class="input-group mb-3">
+            <span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+              <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
+            </svg></span>
+            {{ form.csrf_token }}
+          {{ form.username(class="form-control",placeholder="Username")}}
+          </div>
+          <div class="input-group mb-3">
+            <span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-fill" viewBox="0 0 16 16">
+              <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z"/>
+            </svg></span>
+            {{ form.email(class="form-control",placeholder="Email")}} 
+          </div>
+          <div class="input-group mb-3">
+            <span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lock-fill" viewBox="0 0 16 16">
+              <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
+            </svg></span>
+            {{ form.password(class="form-control",placeholder="Password")}} 
+            </div>
+            <div class="input-group mb-3">
+              <span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lock-fill" viewBox="0 0 16 16">
+                <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
+              </svg></span>
+              {{ form.password_confirm(class="form-control",placeholder="Confirm Password")}} 
+            </div>
+            <!-- {{ form.image_file(class="form-control")}}  -->
+            <div class="d-grid">
+              {{ form.submit(class="form-control btn btn-success")}}
+              <p class="text-center text-muted mt-2">
+               Forget Password ?
+               <a href="#">Reset Password</a>
+              </p>
+              <p class="text-center">
+                Already Have an Account ? <a href="login"> Log in Here </a>
+              </p>
+            </div>
+          </form> 
+        </div> 
+      </div>      
+    </div> 
+  </body>  
+{% endblock %}

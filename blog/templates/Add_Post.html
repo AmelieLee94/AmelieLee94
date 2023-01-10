@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block content %}
+<link href="/static/css/styles.css" rel="stylesheet">
+{% for message in get_flashed_messages() %}
+<body class="bg-light"> 
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+ {% endfor %}
+
+ {% if current_user.is_authenticated %}
+ <div class="container">
+<div class="row mt-5">
+ <div class="col-lg-5 bg-white m-auto rounded-top wrapper">
+    <h2 class="text-center pt-3">Add Comment</h2>
+    <p class="text-center text-muted lead">Leave your opinion here</p>        
+   <form method="POST">
+    <div class="input-group">
+      {{ form.hidden_tag() }}
+      <h5>{{ form.title.label(class="form-label") }}</h5>
+    </div>
+    <div class="input-group mb-3">
+      {{ form.title(class="form-control") }}
+    </div>
+      <div class="input-group">
+      <h5>{{ form.slug.label(class="form-label") }}</h5>
+    </div>
+      <div class="input-group mb-3">
+      {{ form.slug(class="form-control") }}
+    </div>
+      <div class="input-group">
+      <h5>{{ form.content.label(class="form-label") }}</h5>
+    </div>
+      <div class="input-group mb-3">
+      {{ form.content(class="form-control",rows='6') }}
+    </div>
+      <div class="d-grid">
+        {{ form.submit(class="form-control btn btn-success")}}
+      </div>
+    </form>
+    {{ ckeditor.load() }}
+    {{ ckeditor.config(name='content') }} 
+  </div> 
+</div> 
+</div> 
+ </body>
+{% else %}
+<h2>Please Login before operate.</h2> 
+<p>To access this page, please login first.</p>
+<a href="{{ url_for('login') }}">Login Here</a>
+{% endif %}
+{% endblock content %}

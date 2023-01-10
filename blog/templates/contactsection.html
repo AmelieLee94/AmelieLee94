@@ -1,0 +1,36 @@
+
+
+<h1>Edit Your Comment</h1>
+<br/>
+<div>
+    <form method="POST">
+        <div class="input-group">
+          {{ form.hidden_tag() }}
+          <h5>{{ form.title.label(class="form-label") }}</h5>
+        </div>
+        <div class="input-group mb-3">
+          {{ form.title(class="form-control") }}
+        </div>
+          <div class="input-group">
+          <h5>{{ form.slug.label(class="form-label") }}</h5>
+        </div>
+          <div class="input-group mb-3">
+          {{ form.slug(class="form-control") }}
+        </div>
+          <div class="input-group">
+          <h5>{{ form.content.label(class="form-label") }}</h5>
+        </div>
+          <div class="input-group mb-3">
+          {{ form.content(class="form-control",rows='5') }}
+        </div>
+          <div class="d-grid gap-2 d-md-block">
+            {{ form.submit(class=" btn btn btn-primary")}}
+            <a href="{{ url_for('posts')}}" class="btn btn-primary">Back to Comment List >></a>
+        </div>
+        </form> 
+        {{ ckeditor.load() }}
+ {{ ckeditor.config(name='content') }}
+</div>
+</div>      
+ </div>  
+

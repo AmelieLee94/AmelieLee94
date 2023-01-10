@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+{% block content %}
+    <!--CSS Styles -->
+    <link rel="stylesheet" href="../static/css/style.css" /> 
+
+    <!-- Favicons -->
+    <link
+      rel="icon"
+      type="image/jpg"
+      sizes="32x32"
+      href="../static/icons/favicon-32x32.png"
+    />
+
+    <!-- Animate CSS CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <title>Li Min | Future Front-end Developer</title>
+  </head>
+<body>  
+ 
+  <div id="inner-nav"></div>
+  <div id="container">
+      <div id="profile">
+          <p id="name" class="mb-2">Li Min<br><span id="email">LiM83@cardiff.ac.uk</span></p>
+          <br/>
+          <p id="designation">Product Manager<br><span id="college">Served as IT Consultant, Product Manger and Product Operation in Joyy Inc Technology Co. LTD, Beijing ByteDance Network Technology and TalkWeb Network Technology Co., LTD.</span></p>
+          <div id="social-links"><a href="#"><i class="fab fa-facebook-f stroke-transparent"></i></a><a><i class="fab fa-twitter stroke-transparent"></i></a><a><i class="fab fa-linkedin-in stroke-transparent"></i></a><a><i class="fab fa-github stroke-transparent"></i></a></div>
+          <br/>
+          <section class="contact" id="contact">
+            <h2>Get In Touch With Me</h2>
+            <div class="contact-form-container">
+              <div class="contact-form">
+                <form action='post' method="POST">
+                  <div class="form-control">
+                    <label for="name">{{ current_user.username }}</label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="sender-name"
+                      placeholder="Enter Your Name"
+                      class="input-field"
+                      required
+                    />
+                  </div>
+                  <div class="form-control">
+                    <label for="email">Email</label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="sender-email"
+                      placeholder="Enter Your Email"
+                      class="input-field"
+                      required
+                    />
+                  </div>
+                  <div class="form-control">
+                    <label for="message">Message</label>
+                    <textarea
+                      id="message"
+                      cols="60"
+                      rows="10"
+                      placeholder="Enter Your Message"
+                      name="message"
+                      class="input-field"
+                      required
+                    ></textarea>
+                  </div>
+                  <input
+                    type="submit"
+                    value="Submit"
+                    id="submit-btn"
+                    class="submit-btn"
+                  />
+                </form>
+              </div>
+            </div>
+          </section>
+          <hr width="100%">
+          <div id="about">
+              <p style="display:inline;">About</p>
+    
+          </div>
+          <p id="year-graduation">Expected Year of Graduation<br><strong>Sept, 2023</strong></p>
+          <p id="skill">Technical Skills<br><span><strong>Python, Javascript, Python Flask, HTML/CSS, Bootstrap</strong></span></p>
+          <p id="education">Development tools<br><span>VSCodium, Atom, Jupyter</span></p>
+          <p id="more-about">English Capability<br><span>IELTS 7.0<br/> R(7.5) L(7.5) S(6.5) W(6)</span></p>
+          <p id="telephone">Telephone<br><span>044-0753 6235 626</span></p>
+
+      </div>
+      <div id="info-cards">
+        <div class="card">
+            <p><i class="fas fa-graduation-cap stroke-transparent"></i>&nbsp;&nbsp;&nbsp;Education</p>
+            <ul>
+                <li><p class="tags">Cardiff University<br><span>Master of Computing <br/><i>Relevant subjects: Fundamental of Programming, Algorithm, Data Structure</i> <br/><span>Sep. 2022 - Now</span></span></p>
+                <li><p class="tags">Guangdong University of Foreign Study<br><span>Bachelor of International Trade and Bussiness <br/><i>•	Overall GPA: 3.63/4, Average Score: 86.61/100
+                    <br/>Relevant subjects: Accounting, Calculus, Statistics, Website Design.
+                </i> <br/><span>Sep. 2013 - Jun 2017</span></span></p>
+                   
+            </ul>
+        </div>
+          <div class="card">
+              <p><i class="fas fa-briefcase stroke-transparent"></i>&nbsp;&nbsp;&nbsp;Work Experience</p>
+              <ul>
+                  <li><p class="tags">Media Operation Assistant, Guangzhou UC Tech Co Ltd., China<br><span>Media Operations Assistant | Guangzhou UC Tech<br/><span>Jan 2017 - Apr 2018</span></span></p>
+                     
+                  <li><p class="tags">Beijing ByteDance Network Technology, Beijing, China<br><span>User Operations | ByteDance Network Technology Company<br/><span>Apr 2018 - Mar 2019</span></span></p>
+                 
+                  <li><p class="tags">Product Operation, Joyy Inc Technology Co. LTD, Guangzhou, China<br><span>Product Operation | Joyy Inc Technology Co. LTD, Guangzhou, China<br/><span>Mar 2019 - Jan 2021</span></span></p>
+                     
+                  <li><p class="tags">TalkWeb Network Technology Co., LTD, China<br><span>Technical Support Engineer | TalkWeb Network Technology<br/><span>Mar 2021 - Jul 2022</span></span></p>
+              </ul>
+          </div>
+          <div class="card">
+            <p><i class="fas fa-briefcase stroke-transparent"></i>&nbsp;&nbsp;&nbsp;Projects</p>
+            <ul>
+            <li><p class="tags">Built portfolio website<br><span>Built dynamic portfolio website with python flask, mysql database, bootstrap, javascript, html and css | <span>Dec 2022 - Jan 2023</span></span></p>
+            <li><p class="tags">To B Delivery Platform Tester<span><span> | Mar 2021 - Jul 2022<br/></span>•	Collected bugs and requirements from clients, organized Requirements Reviewing Meetings, and worked with Product Managers to draft them as PRD documents for development.
+                <br/>•	Wrote 100+ test cases for the delivery function of a To B platform to ensure the realization of the delivery data visualization dashboard. Worked with the R&D Team to test the test samples and found 10+ errors.</span></p>
+                </ul>
+        </div>
+            <i class="scroll-up" id="scroll-up"
+            ><img
+              src="../static/icons/icons8-upward-arrow.png"
+              class="socicon up-arrow"
+              alt="scroll-up"
+            /></i>
+      </div>
+  </div>
+    <!-- Website scripts -->
+    <script src="../static/js/app.js"></script>
+  
+  </body>
+{% endblock %}
