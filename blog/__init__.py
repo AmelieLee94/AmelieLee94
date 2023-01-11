@@ -35,4 +35,4 @@ login_manager.init_app(app)
 
 mail=Mail(app)
 
-# from blog import routes
+from blog import routes
