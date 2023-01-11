@@ -4,7 +4,6 @@ Flask-Login
 Flask-SQLAlchemy
 Flask-WTF
 greenlet
-gunicorn
 itsdangerous
 Jinja2
 MarkupSafe
@@ -12,3 +11,4 @@ SQLAlchemy
 Werkzeug
 WTForms
 pymysql
+gunicorn
