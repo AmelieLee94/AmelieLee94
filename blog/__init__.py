@@ -21,7 +21,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://c22094835:Li12345678@cs
 UPLOAD_FOLDER = './blog/static/img/'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-ckeditor = CKEditor(app)
+# ckeditor = CKEditor(app)
 db = SQLAlchemy(app)
 # bootstrap4 = Bootstrap4(app)
 login_manager = LoginManager()
