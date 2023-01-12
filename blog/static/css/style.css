@@ -36,8 +36,8 @@ hr{
 }
 #image,#profile-photo{
   position: relative;
-  width: 80px;
-  height: 80px;
+  width: 150px;
+  height: 150px;
   border-radius: 10px;
 }
 #image > a{

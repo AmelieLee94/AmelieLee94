@@ -23,16 +23,14 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 ckeditor = CKEditor(app)
 db = SQLAlchemy(app)
-bootstrap4 = Bootstrap4(app)
+Bootstrap4(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
-
+mail=Mail(app)
 # app.config['MAIL_SERVER']='smtp.gmail.com'
 # app.config['MAIL_PORT']=587
 # app.config['MAIL_USE_TLS']= True
 # app.config['MAIL_USERNAME']='limin@gmail.com'
 # app.config['MAIL_PASSWORD']='temppassword123!'
-
-mail=Mail(app)
 
 from blog import routes

@@ -23,60 +23,44 @@
   <div id="inner-nav"></div>
   <div id="container">
       <div id="profile">
+        <div id="image">
+          <img id="profile-photo" src="../static/img/profile.jpg" alt="Profile-Image">
+      </div>
+      <br/>
           <p id="name" class="mb-2">Li Min<br><span id="email">LiM83@cardiff.ac.uk</span></p>
           <br/>
           <p id="designation">Product Manager<br><span id="college">Served as IT Consultant, Product Manger and Product Operation in Joyy Inc Technology Co. LTD, Beijing ByteDance Network Technology and TalkWeb Network Technology Co., LTD.</span></p>
           <div id="social-links"><a href="#"><i class="fab fa-facebook-f stroke-transparent"></i></a><a><i class="fab fa-twitter stroke-transparent"></i></a><a><i class="fab fa-linkedin-in stroke-transparent"></i></a><a><i class="fab fa-github stroke-transparent"></i></a></div>
           <br/>
+          {% if current_user.is_authenticated %}
           <section class="contact" id="contact">
-            <h2>Get In Touch With Me</h2>
+            <p id="name">Contact Me</p>
             <div class="contact-form-container">
               <div class="contact-form">
-                <form action='post' method="POST">
                   <div class="form-control">
-                    <label for="name">{{ current_user.username }}</label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="sender-name"
-                      placeholder="Enter Your Name"
-                      class="input-field"
-                      required
-                    />
+                    <span>Name&ensp;:&ensp;</span><i>{{ current_user.username }}</i>
+                    <br/>
+                    <span>Email&ensp;:&ensp;</span><i>{{ current_user.email }}</i>
+                    <br/><br/>
+                    <a href="{{url_for('add_post')}}" class="btn btn-dark">Write Comment&ensp;&ensp;<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+                      <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
+                    </svg></a>
                   </div>
-                  <div class="form-control">
-                    <label for="email">Email</label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="sender-email"
-                      placeholder="Enter Your Email"
-                      class="input-field"
-                      required
-                    />
-                  </div>
-                  <div class="form-control">
-                    <label for="message">Message</label>
-                    <textarea
-                      id="message"
-                      cols="60"
-                      rows="10"
-                      placeholder="Enter Your Message"
-                      name="message"
-                      class="input-field"
-                      required
-                    ></textarea>
-                  </div>
-                  <input
-                    type="submit"
-                    value="Submit"
-                    id="submit-btn"
-                    class="submit-btn"
-                  />
-                </form>
               </div>
             </div>
           </section>
+          {% else %}
+          <section class="contact" id="contact">
+            <p id="name">Contact Me</p>
+            <div class="contact-form-container">
+              <div class="contact-form">
+                  <div class="form-control">
+                    <label for="message">Hi, my Friend.</label>
+                  <button><a href="{{url_for('login')}}">Login and Comment</a></button>
+              </div>
+            </div>
+          </section>
+          {% endif %}
           <hr width="100%">
           <div id="about">
               <p style="display:inline;">About</p>

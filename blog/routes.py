@@ -54,7 +54,9 @@ def register():
   form = RegistrationForm()
   if form.validate_on_submit():
     user = User.query.filter_by(email=form.email.data).first()   
-    if user is None:
+    if user:
+      flash('Email Already Used by Other User')
+    elif user is None:
       user = User(username=form.username.data, email=form.email.data, password=form.password.data)
       db.session.add(user)
       db.session.commit()
@@ -63,11 +65,7 @@ def register():
       form.email.data = ''
       form.password.data = ''
       
-      flash('Registration successful!')
-
-    if user:
-      flash('Email Already Used by Other User')  
-          
+      flash('Registration successful!')          
   users_list = User.query.order_by(User.id)  
   # return redirect(url_for('registered'))
   return render_template('register.html',title='Register',form=form,users_list=users_list)
@@ -280,20 +278,35 @@ def search():
             return render_template('search.html',form=form)
 
 @app.route("/create-comment/<post_id>",methods=['GET','POST'])
+@login_required
 def create_comment(post_id):
   text = request.form.get('text')
+  print(text)
   if not text:
       flash('Content can not be empty!',category='error')
   else:
-    post=Post.query.filter_by(id=post.id)  
-    if post:
-      comment = Comment(text=text,author_id=current_user.id,post_id=post_id)
-      db.session.add(comment)
-      db.session.commit()
-    else:
-      flash('Post does not exist.',category='error')    
+      post=Post.query.filter_by(id=post_id)
+      if post:
+        comment = Comment(text=text,author_id=current_user.id,post_id=post_id)
+        db.session.add(comment)
+        db.session.commit()
+      else:
+        flash('Post does not exist.',category='error')    
   return redirect(url_for("posts"))
 
+@app.route("/delete-comment/<comment_id>",methods=['GET','POST'])
+@login_required
+def delete_comment(comment_id):
+    comment = Comment.query.filter_by(id=comment_id).first()
+    if current_user.id != comment.author_id and current_user !=comment.post.author_id:
+          flash('Only who commented or replied can delete their own content!')
+    elif not comment:
+          flash('Reply does not exist anymore.')
+    else:
+         db.session.delete(comment)
+         db.session.commit() 
+         flash('Reply deleted!')
+    return redirect(url_for("posts"))
 
 @app.context_processor
 def base():

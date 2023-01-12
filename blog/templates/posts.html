@@ -8,7 +8,8 @@
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
  {% endfor %}
-<h1>Comments List</h1>
+<h1>Users' Comments</h1><a href="{{ url_for('add_post')}}" class="btn btn-outline-secondary">Write Your Own Comment >></a>
+<br/>
 <br/>
 <div>
 {% for post in posts %}
@@ -22,21 +23,35 @@
             <img src="{{ url_for('static',filename='img/default.jpg')  }}" width="150">
             {% endif %}
             </div>
-    commented by : {{ post.author_id }}<br/>
+    commented by :&ensp; {{ post.author_id }}<br/>
     {{ post.title }}<br/>
     {{ post.content|safe }}<br/>
-    Date Posted : {{ post.date }} 
+    Date Posted :&ensp; {{ post.date }} 
     {{ post.slug }}
     <br/>
-    {% for c in post.comment %}
-    {{ c.text }}
-    {% endfor %}
-     <form class="input-group mb-3" mothod="POST" action="create-comment/{{ post.id }}" >
-      <input type="text" id="text" name="text" class="form-control" placeholder="Leave your comment!">
-      <button type="submit" class="btn btn-primary">Comment</button>
+    <div class="collapese" id="comments-{{post.id}}">
+      <div class="card">
+        <div class="card-body" id="comments-expanded-{{post.id}}">
+          {% for c in post.comment %}
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+           {{c.user.username}}:{{c.text}}
+          </div>
+           <div><small class='text-muted'>{{c.date}}</small></div>
+          </div>
+          <div class="btn-group">
+            <button type="button" class="btn btn-sm btn-primary">
+          <ul><li><a href="/delete-comment/{{c.id}}">Delete</a></li></ul>
+            </button>
+          </div>
+          {% endfor %}   
+        </div>
+      </div>
+    </div>
+     <form class="input-group mb-3" method="POST" action="create-comment/{{ post.id }}" >
+      <input type="text" id="text" name="text" class="form-control" placeholder="Leave your reply!">
+      <button type="submit" class="btn btn-primary">Reply</button>
       {{ form.hidden_tag() }}
-        {{ form.text }}
-      {{ form.submit(class="form-control btn btn-success")}}
      </form>
     <br/>
     <br/>
