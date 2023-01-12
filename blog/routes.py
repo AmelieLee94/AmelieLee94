@@ -1,5 +1,5 @@
 from flask import render_template, url_for, request, redirect, flash
-from blog import app, db, mail
+from blog import app, db
 from flask_mail import Message
 from blog.models import User, Post, Comment
 from flask_bootstrap import Bootstrap4
