@@ -1,5 +1,5 @@
 from flask import Flask
-from flask_bootstrap import Bootstrap4
+# from flask_bootstrap import Bootstrap4
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_ckeditor import CKEditor
@@ -23,7 +23,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 ckeditor = CKEditor(app)
 db = SQLAlchemy(app)
-Bootstrap4(app)
+# Bootstrap4(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 mail=Mail(app)
