@@ -8,7 +8,16 @@
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
  {% endfor %}
-<h1>Users' Comments</h1><a href="{{ url_for('add_post')}}" class="btn btn-outline-secondary">Write Your Own Comment >></a>
+<h1>Users' Comments</h1>
+{% if current_user.is_authenticated %}
+<a href="{{ url_for('add_post')}}" class="btn btn-outline-secondary">Write Your Own Comment&ensp;&ensp;<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen-fill" viewBox="0 0 16 16">
+  <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z"/>
+</svg></a>
+{% else %}
+<a href="{{ url_for('login')}}" class="btn btn-outline-secondary">Login to Write Comment&ensp;&ensp;<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen-fill" viewBox="0 0 16 16">
+  <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z"/>
+</svg></a>
+{% endif %}
 <br/>
 <br/>
 <div>
@@ -18,36 +27,60 @@
     <div class="card-body">
         <div calss="">
             {% if post.user.image_file %}
-            <img src="{{ url_for('static',filename='img/' + post.user.image_file)  }}" width="150">
+            <img src="{{ url_for('static',filename='img/' + post.user.image_file)  }}" width="80">
             {% else %}
-            <img src="{{ url_for('static',filename='img/default.jpg')  }}" width="150">
+            <img src="{{ url_for('static',filename='img/default.jpg')  }}" width="80">
             {% endif %}
+            <span class="fs-3">&ensp; {{ post.user.username }}</span>&ensp;<br/>&ensp;<span class="text muted">{{ post.date }}</span>&ensp;|&ensp;<span class="text muted">{{ post.slug }}</span>
             </div>
-    commented by :&ensp; {{ post.author_id }}<br/>
-    {{ post.title }}<br/>
-    {{ post.content|safe }}<br/>
-    Date Posted :&ensp; {{ post.date }} 
-    {{ post.slug }}
+    <span class="fs-4">{{ post.title }}</span><br/>
+    <p>{{ post.content }}</p>
+ 
+    {% if post.author_id == current_user.id %}
+    <a href="{{ url_for('post',post_id=post.id)}}" class="btn btn-outline-secondary">View Comment detail</a>
+    <a href="{{ url_for('edit_post',post_id=post.id)}}" class="btn btn-outline-secondary">Edit Comment</a>
+    <a href="{{ url_for('delete_post',post_id=post.id)}}" class="btn btn-outline-danger">Delete Comment</a>
+    
+    {% else %} 
+    <a href="{{ url_for('post',post_id=post.id)}}" class="btn btn-outline-secondary">View Comment detail</a>
+    {% endif %}
+    <br/>
     <br/>
     <div class="collapese" id="comments-{{post.id}}">
-      <div class="card">
+      <div class="card mt-2">
         <div class="card-body" id="comments-expanded-{{post.id}}">
+          <p class="border-bottom text-muted">Replies are Shown here</p>
           {% for c in post.comment %}
-          <div class="d-flex justify-content-between align-items-center">
-            <div>
-           {{c.user.username}}:{{c.text}}
-          </div>
-           <div><small class='text-muted'>{{c.date}}</small></div>
-          </div>
-          <div class="btn-group">
-            <button type="button" class="btn btn-sm btn-primary">
-          <ul><li><a href="/delete-comment/{{c.id}}">Delete</a></li></ul>
-            </button>
-          </div>
+          <div class="d-flex justify-content-start align-items-center mb-1 border-bottom">
+            <div class="mb-1">
+              <div class="d-flex align-items-left">
+              <div calss="mt-2">
+                {% if c.user.image_file %}
+                <img src="{{ url_for('static',filename='img/' + c.user.image_file)  }}" width="30">
+                {% else %}
+                <img src="{{ url_for('static',filename='img/default.jpg')  }}" width="30">
+                {% endif %}
+                </div>
+                &ensp;&ensp;{{c.user.username}}
+              </div>
+              <div><small class='text-muted'>{{c.date}}</small></div>
+               <div>{{c.text}}</div>
+               {% if c.author_id == current_user.id %}
+               <div class="btn-group">
+                &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+                <a href="/delete-comment/{{c.id}}" class="text-decoration-none text-danger small">Delete Reply</a>
+                </div>
+                {% else %}
+                {% endif %}
+              </div>   
+              </div>
           {% endfor %}   
-        </div>
+        <!--  -->
+      </div>
       </div>
     </div>
+    <br/>
+    <br/>
      <form class="input-group mb-3" method="POST" action="create-comment/{{ post.id }}" >
       <input type="text" id="text" name="text" class="form-control" placeholder="Leave your reply!">
       <button type="submit" class="btn btn-primary">Reply</button>
@@ -55,13 +88,6 @@
      </form>
     <br/>
     <br/>
-    {% if post.author_id == current_user.id %}
-    <a href="{{ url_for('post',post_id=post.id)}}" class="btn btn-outline-secondary">View Comment detail</a>
-    <a href="{{ url_for('edit_post',post_id=post.id)}}" class="btn btn-outline-secondary">Edit Comment</a>
-    <a href="{{ url_for('delete_post',post_id=post.id)}}" class="btn btn-outline-danger">Delete Comment</a>
-    {% else %} 
-    <a href="{{ url_for('post',post_id=post.id)}}" class="btn btn-outline-secondary">View Comment detail</a>
-    {% endif %}
 </div>
 </div>
 {% endfor %}     

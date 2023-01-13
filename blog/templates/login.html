@@ -32,10 +32,8 @@
             </div>   
             <div class="d-grid">
               {{ form.submit(class="btn btn-success",onclick="myFunction()",value="Login")}} 
-              <p class="text-center text-muted mt-2">
-                Forget Password ?
-                <a href="{{ url_for('reset_request') }}">Reset Password</a>
-               </p>
+              <br/>
+
               <p class="text-center" >
                 Do not Have Account ? <a href="{{ url_for('register') }}"> Register Now </a>
               </p>

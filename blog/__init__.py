@@ -3,7 +3,6 @@ from flask_bootstrap import Bootstrap4
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_ckeditor import CKEditor
-from flask_mail import Mail
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 app = Flask(__name__)
@@ -26,7 +25,6 @@ db = SQLAlchemy(app)
 Bootstrap4(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
-mail=Mail(app)
 # app.config['MAIL_SERVER']='smtp.gmail.com'
 # app.config['MAIL_PORT']=587
 # app.config['MAIL_USE_TLS']= True

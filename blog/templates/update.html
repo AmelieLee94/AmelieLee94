@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
+<a href="{{ url_for('dashboard') }}"> Back to User Profile Page</a>
 {% for message in get_flashed_messages() %} 
 <div class="alert alert-warning alert-dismissible fade show" role="alert">
     {{ message }}

@@ -14,9 +14,10 @@
 {% for post in posts %}
 <div class="card p-1 mb-3 rounded">
     <div class="card-body">
-    {{ post.title }}<br/>
-    {{ post.content|safe }}<br/>
-    {{ post.date }} | {{ post.slug }}
+    <p class="fs-3">{{ post.title }}</p>
+    <span class="text-muted">{{ post.date }} </span>
+    <br/><br/>
+    {{ post.content }}<br/> 
     <br/>
     <br/>
     {% if post.author_id == current_user.id %}

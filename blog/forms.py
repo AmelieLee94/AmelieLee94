@@ -8,7 +8,6 @@ from flask_ckeditor import CKEditorField
 
 class RegistrationForm(FlaskForm):
   username = StringField('Username',validators=[DataRequired(),Regexp('^[0-9A-Za-z]{4,8}$',message='Your username should be 4-8 characters long, and can not contain symbols.')])
-  # confirm_username = StringField('Username',validators=[DataRequired()])
   email = EmailField('Email Address', validators=[DataRequired(), Email()])
   password = PasswordField('Password',validators=[DataRequired(),EqualTo('password_confirm',message='Passwords Must Match!'),Length(min=8, max=80)])
   password_confirm = PasswordField('Confirm Password',validators=[DataRequired()])
@@ -32,14 +31,16 @@ class LoginForm(FlaskForm):
   remember = BooleanField('remember me')
   submit = SubmitField('Login')
 
-class ResetRequestForm(FlaskForm):
-  email = EmailField('Email Address', validators=[DataRequired(), Email()])
-  submit = SubmitField('Sumbit')  
+# class ResetRequestForm(FlaskForm):
+#   username = StringField('Username',validators=[DataRequired(),Length(min=4, max=15)])    
+#   key = StringField('Key',validators=[DataRequired()])    
+#   email = EmailField('Email Address', validators=[DataRequired(), Email()])
+#   submit = SubmitField('Sumbit')  
 
-class ResetPasswordForm(FlaskForm):
-  password = PasswordField('Password',validators=[DataRequired(),Length(min=8, max=80)])
-  password_confirm = PasswordField('Confirm Password',validators=[DataRequired()])
-  submit = SubmitField('Submit')  
+# class ResetPasswordForm(FlaskForm):
+#   password = PasswordField('Password',validators=[DataRequired(),EqualTo('password_confirm',message='Passwords Must Match!'),Length(min=8, max=80)])
+#   password_confirm = PasswordField('Confirm Password',validators=[DataRequired()])
+#   submit = SubmitField('Submit')  
 
 class PostForm(FlaskForm):
   title = StringField('Title',validators=[DataRequired()])

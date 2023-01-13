@@ -3,7 +3,7 @@ from blog import app, db
 from flask_mail import Message
 from blog.models import User, Post, Comment
 from flask_bootstrap import Bootstrap4
-from blog.forms import RegistrationForm, LoginForm, PostForm, SearchForm, CommentForm, ResetRequestForm, ResetPasswordForm
+from blog.forms import RegistrationForm, LoginForm, PostForm, SearchForm, CommentForm
 from flask_login import UserMixin, login_user, logout_user, current_user,LoginManager,login_required
 from email.mime.text import MIMEText
 from flask_sqlalchemy import SQLAlchemy
@@ -54,9 +54,12 @@ def register():
   form = RegistrationForm()
   if form.validate_on_submit():
     user = User.query.filter_by(email=form.email.data).first()   
+    username = User.query.filter_by(username=form.username.data).first() 
     if user:
-      flash('Email Already Used by Other User')
-    elif user is None:
+      flash('Email Already Used by Other User!')
+    elif username:
+      flash('Username Already Used by Other User!')
+    elif user is None and username is None:
       user = User(username=form.username.data, email=form.email.data, password=form.password.data)
       db.session.add(user)
       db.session.commit()
@@ -92,18 +95,24 @@ def logout():
   flash('You\'re now logged out. Thanks for your visit!')
   return render_template('logout.html')
 
-@app.route("/reset_password",methods=['GET','POST'])
-def reset_request():
-  form=ResetRequestForm()
-  if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
-        if user:
-          send_mail(user)
-          flash('Reset request sent. Please check your mail.')
-          return redirect(url_for('login'))
-        else:
-          flash('User does not exist. Please check again!')  
-  return render_template('reset_request.html',title='reset request',form=form,legend='Reset Password')
+# @app.route("/reset_request",methods=['GET','POST'])
+# def reset_request():
+#   form=ResetRequestForm()
+#   if form.validate_on_submit():
+#         user = User.query.filter_by(email=form.email.data).first()
+#         if user:
+#           if user.username == form.username.data and user.key == form.key.data:    
+#               flash('Please change your password.')
+#               return redirect(url_for('change_password'))
+#           elif user.username != form.username.data:
+#               flash('Invalid Username. Please check again!')
+#               return render_template('reset_request.html',title='reset request',form=form,legend='Reset Password')  
+#           elif user.key != form.key.data:
+#               flash('Invalid Key! Please check again!')
+#               return render_template('reset_request.html',title='reset request',form=form,legend='Reset Password')  
+#         else:
+#           flash('Email does not exist. Please check again!')  
+#   return render_template('reset_request.html',title='reset request',form=form,legend='Reset Password')
 
 
 # def send_mail(user):
@@ -113,21 +122,25 @@ def reset_request():
 #     {url_for('reset_token',token=token,_external=True)}
 #     If you have recieve email before. Please ignore this message.
 #     '''
-#     mail.send(msg)
+# #     mail.send(msg)
 
-@app.route("/reset_password/<token>",methods=['GET','POST'])
-def reset_request_token(token):
-      user=User.verify_token(token)
-      if user is None:
-            flash('That is invalid token or expired.Please try again.')
-            return redirect('reset_request.html')
-      form=ResetPasswordForm()      
-      if form.validate_on_submit():
-        user = User(password=form.password.data)
-        db.session.commit(user)
-        flash('Password changed! Please Log in')
-        return redirect(url_for('login'))
-      return render_template('change_password.html',title='Change Pssword',legend='Change Pssword',form=form)   
+# @app.route("/change_password",methods=['GET','POST'])
+# def change_password():
+#     form=ResetPasswordForm()     
+#     if form.validate_on_submit():   
+#       user = User(password=form.password.data)
+#       email = User.email
+#       key = User.key
+      
+#       db.session.add(user)
+#       db.session.commit()
+#       form.password.data = ''
+#       form.password_confirm.data = ''
+#       flash('Password changed! Please Log in')
+#       return redirect(url_for('login'))
+#     else:
+#           flash('Please input new password!')
+#           return render_template('change_password.html',form=form)
 
 @app.route("/dashboard",methods=['GET','POST'])
 @login_required
@@ -158,7 +171,6 @@ def posts():
   return render_template('posts.html',posts=posts)  
 
 @app.route("/post/<int:post_id>")
-@login_required
 def post(post_id):
   post=Post.query.get_or_404(post_id)
   return render_template('post.html',title=post.title,post=post)
@@ -176,7 +188,7 @@ def edit_post(post_id):
             db.session.commit()
             flash('Comment Has Been Successfully Updated!')
             return redirect(url_for('post',post_id=post.id))
-      if current_user.id == post.author_id:
+      if current_user.id == post.author_id or current_user.id == 11:
         form.title.data=post.title
         form.slug.data=post.slug 
         form.content.data=post.content
@@ -284,12 +296,13 @@ def create_comment(post_id):
   print(text)
   if not text:
       flash('Content can not be empty!',category='error')
-  else:
+  else: 
       post=Post.query.filter_by(id=post_id)
-      if post:
+      if post: 
         comment = Comment(text=text,author_id=current_user.id,post_id=post_id)
         db.session.add(comment)
         db.session.commit()
+        flash('New Reply Added!')
       else:
         flash('Post does not exist.',category='error')    
   return redirect(url_for("posts"))
