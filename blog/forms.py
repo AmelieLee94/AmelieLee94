@@ -1,10 +1,9 @@
 from flask_wtf import FlaskForm
-from flask_bootstrap import Bootstrap4
 from wtforms import StringField, FileField,PasswordField, SubmitField, SelectField, BooleanField,EmailField
 from wtforms.validators import InputRequired, Email, DataRequired, EqualTo, ValidationError, Length, Regexp
 from blog.models import User
 from flask_wtf.file import FileField, FileAllowed, FileRequired
-from flask_ckeditor import CKEditorField
+# from flask_ckeditor import CKEditorField
 
 class RegistrationForm(FlaskForm):
   username = StringField('Username',validators=[DataRequired(),Regexp('^[0-9A-Za-z]{4,8}$',message='Your username should be 4-8 characters long, and can not contain symbols.')])
