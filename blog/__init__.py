@@ -1,8 +1,8 @@
 from flask import Flask
-# from flask_bootstrap import Bootstrap4
+from flask_bootstrap import Bootstrap4
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
-# from flask_ckeditor import CKEditor
+from flask_ckeditor import CKEditor
 # from flask_mail import Mail
 from werkzeug.middleware.proxy_fix import ProxyFix
 
@@ -21,9 +21,9 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://c22094835:Li12345678@cs
 UPLOAD_FOLDER = './blog/static/img/'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-# ckeditor = CKEditor(app)
+ckeditor = CKEditor(app)
 db = SQLAlchemy(app)
-# Bootstrap4(app)
+Bootstrap4(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 # mail=Mail(app)
