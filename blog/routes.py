@@ -1,8 +1,7 @@
 from flask import render_template, url_for, request, redirect, flash
 from blog import app, db
-from flask_mail import Message
 from blog.models import User, Post, Comment
-from flask_bootstrap import Bootstrap4
+# from flask_bootstrap import Bootstrap4
 from blog.forms import RegistrationForm, LoginForm, PostForm, SearchForm, CommentForm, ResetRequestForm, ResetPasswordForm
 from flask_login import UserMixin, login_user, logout_user, current_user,LoginManager,login_required
 from email.mime.text import MIMEText
