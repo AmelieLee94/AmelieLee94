@@ -1,5 +1,4 @@
 from flask_wtf import FlaskForm
-from flask_bootstrap import Bootstrap4
 from wtforms import StringField, FileField,PasswordField, SubmitField, SelectField, BooleanField,EmailField
 from wtforms.validators import InputRequired, Email, DataRequired, EqualTo, ValidationError, Length, Regexp
 from blog.models import User

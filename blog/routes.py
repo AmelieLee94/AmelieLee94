@@ -1,6 +1,5 @@
 from flask import render_template, url_for, request, redirect, flash
 from blog import app, db
-from flask_mail import Message
 from blog.models import User, Post, Comment
 from flask_bootstrap import Bootstrap4
 from blog.forms import RegistrationForm, LoginForm, PostForm, SearchForm, CommentForm
@@ -9,7 +8,7 @@ from email.mime.text import MIMEText
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import sessionmaker
 import smtplib
-from email.message import EmailMessage
+# from email.message import EmailMessage
 from sqlalchemy import create_engine
 from flask_wtf import FlaskForm
 from flask_ckeditor import CKEditor
