@@ -11,7 +11,7 @@ import smtplib
 # from email.message import EmailMessage
 from sqlalchemy import create_engine
 from flask_wtf import FlaskForm
-from flask_ckeditor import CKEditor
+# from flask_ckeditor import CKEditor
 from werkzeug.utils import secure_filename
 from itsdangerous import URLSafeTimedSerializer as Serializer
 import uuid as uuid
