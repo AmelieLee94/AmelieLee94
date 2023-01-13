@@ -8,7 +8,7 @@ from email.mime.text import MIMEText
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import sessionmaker
 import smtplib
-from email.message import EmailMessage
+# from email.message import EmailMessage
 from sqlalchemy import create_engine
 from flask_wtf import FlaskForm
 from flask_ckeditor import CKEditor
