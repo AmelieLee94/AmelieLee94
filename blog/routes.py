@@ -1,7 +1,7 @@
 from flask import render_template, url_for, request, redirect, flash
 from blog import app, db
 from blog.models import User, Post, Comment
-# from flask_bootstrap import Bootstrap4
+from flask_bootstrap import Bootstrap4
 from blog.forms import RegistrationForm, LoginForm, PostForm, SearchForm, CommentForm, ResetRequestForm, ResetPasswordForm
 from flask_login import UserMixin, login_user, logout_user, current_user,LoginManager,login_required
 from email.mime.text import MIMEText
@@ -11,7 +11,7 @@ import smtplib
 # from email.message import EmailMessage
 from sqlalchemy import create_engine
 from flask_wtf import FlaskForm
-# from flask_ckeditor import CKEditor
+from flask_ckeditor import CKEditor
 from werkzeug.utils import secure_filename
 from itsdangerous import URLSafeTimedSerializer as Serializer
 import uuid as uuid
