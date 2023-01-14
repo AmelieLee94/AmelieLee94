@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <link href="/static/css/styles.css" rel="stylesheet">
+<link rel="stylesheet" href="../static/css/style.css" /> 
 {% for message in get_flashed_messages() %}
 <body class="bg-light"> 
 <div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -20,6 +21,7 @@
 {% endif %}
 <br/>
 <br/>
+<div class="container">
 <div>
 {% for post in posts %}
 
@@ -31,20 +33,23 @@
             {% else %}
             <img src="{{ url_for('static',filename='img/default.jpg')  }}" width="80">
             {% endif %}
-            <span class="fs-3">&ensp; {{ post.user.username }}</span>&ensp;<br/>&ensp;<span class="text muted">{{ post.date }}</span>&ensp;|&ensp;<span class="text muted">{{ post.slug }}</span>
+            <span class="fs-3">&ensp; {{ post.user.username }}</span>&ensp;<br/>&ensp;<span class="text muted">{{ post.date }}</span>
             </div>
-    <span class="fs-4">{{ post.title }}</span><br/>
-    <p>{{ post.content }}</p>
- 
+            <br/>
+            <span class="fs-4">&ensp;{{ post.title }}</span><br/>
+            <div>&ensp;&ensp;{{ post.content|safe }}</div>
+     <br/>
     {% if post.author_id == current_user.id %}
-    <a href="{{ url_for('post',post_id=post.id)}}" class="btn btn-outline-secondary">View Comment detail</a>
-    <a href="{{ url_for('edit_post',post_id=post.id)}}" class="btn btn-outline-secondary">Edit Comment</a>
-    <a href="{{ url_for('delete_post',post_id=post.id)}}" class="btn btn-outline-danger">Delete Comment</a>
-    
+    <div class=".btn-group">
+      &ensp;&ensp;&ensp;<a href="{{ url_for('post',post_id=post.id)}}" class="text-decoration-none">View detail</a>
+    &ensp;&ensp;
+    <a href="{{ url_for('edit_post',post_id=post.id)}}" class="text-decoration-none">Edit</a>
+    &ensp;&ensp;
+    <a href="{{ url_for('delete_post',post_id=post.id)}}" class="text-decoration-none text-danger">Delete</a>
+  </div>
     {% else %} 
-    <a href="{{ url_for('post',post_id=post.id)}}" class="btn btn-outline-secondary">View Comment detail</a>
+    <a href="{{ url_for('post',post_id=post.id)}}" class="text-decoration-none text-secondary">View detail</a>
     {% endif %}
-    <br/>
     <br/>
     <div class="collapese" id="comments-{{post.id}}">
       <div class="card mt-2">
@@ -92,4 +97,13 @@
 </div>
 {% endfor %}     
 </div>  
+<i class="scroll-up" id="scroll-up"
+><img
+  src="../static/icons/icons8-upward-arrow.png"
+  class="socicon up-arrow"
+  alt="scroll-up"
+/></i>
+<!-- Website scripts -->
+<script src="../static/js/app.js"></script>
+</div>
 {% endblock content %}

@@ -26,7 +26,6 @@
     {{ post.title }}<br/>
     {{ post.content|safe }}<br/>
     Date Posted : {{ post.date }} 
-    {{ post.slug }}
     <br/>
     {% for c in post.comment %}
     {{ c.text }}

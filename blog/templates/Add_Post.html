@@ -17,6 +17,7 @@
     <p class="text-center text-muted lead">Leave your opinion here</p>        
    <form method="POST">
     <div class="input-group">
+      <div>
       {{ form.hidden_tag() }}
       <h5>{{ form.title.label(class="form-label") }}</h5>
     </div>
@@ -24,20 +25,16 @@
       {{ form.title(class="form-control") }}
     </div>
       <div class="input-group">
-      <h5>{{ form.slug.label(class="form-label") }}</h5>
-    </div>
-      <div class="input-group mb-3">
-      {{ form.slug(class="form-control") }}
-    </div>
-      <div class="input-group">
       <h5>{{ form.content.label(class="form-label") }}</h5>
     </div>
       <div class="input-group mb-3">
-      {{ form.content(class="form-control",rows='6') }}
+      {{ form.content(class="form-control",rows='5') }}
     </div>
-      <div class="d-grid">
-        {{ form.submit(class="form-control btn btn-success")}}
-      </div>
+    <div class="d-grid gap-2 d-md-block">
+      {{ form.submit(class=" btn btn btn-success")}}
+      &ensp;&ensp;<a href="{{ url_for('posts')}}" >Back to Comment List >></a>
+  </div>
+    </div>
     </form>
     {{ ckeditor.load() }}
     {{ ckeditor.config(name='content') }} 

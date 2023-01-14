@@ -8,7 +8,6 @@ from email.mime.text import MIMEText
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import sessionmaker
 import smtplib
-# from email.message import EmailMessage
 from sqlalchemy import create_engine
 from flask_wtf import FlaskForm
 from flask_ckeditor import CKEditor
@@ -153,10 +152,9 @@ def add_post():
    
   if form.validate_on_submit():
       user = current_user.id
-      post = Post(title=form.title.data,content=form.content.data,slug=form.slug.data,author_id = user)
+      post = Post(title=form.title.data,content=form.content.data,author_id = user)
       form.title.data = ''
       form.content.data = ''
-      form.slug.data = ''
 
       db.session.add(post)
       db.session.commit()
@@ -181,7 +179,6 @@ def edit_post(post_id):
       form = PostForm()
       if form.validate_on_submit():
             post.title = form.title.data
-            post.slug = form.slug.data
             post.content = form.content.data
             db.session.add(post)
             db.session.commit()
@@ -189,7 +186,6 @@ def edit_post(post_id):
             return redirect(url_for('post',post_id=post.id))
       if current_user.id == post.author_id or current_user.id == 11:
         form.title.data=post.title
-        form.slug.data=post.slug 
         form.content.data=post.content
         return render_template('edit_post.html',form=form)
       else:
@@ -201,25 +197,30 @@ def edit_post(post_id):
 def delete_post(post_id):
       post_delete = Post.query.get_or_404(post_id)
       id = current_user.id
-      if id == post_delete.author_id:
-            
-        try:
-              db.session.delete(post_delete)
-              db.session.commit()
-              flash('Comment Deleted!')
-
-              posts = Post.query.order_by(Post.date)
-              return render_template('posts.html',posts=posts) 
-      
-        except:
-              flash('Some mistakes happened, try again.') 
-              posts = Post.query.order_by(Post.date)
-              return render_template('posts.html',posts=posts) 
-      
+      if post_delete.comment:
+        flash('Can not delete a post with comments!')
+        posts = Post.query.order_by(Post.date)
+        return render_template('posts.html',posts=posts)
       else:
-            flash('Only the Poster Can Delete this Comment.')
-            posts = Post.query.order_by(Post.date)
-            return render_template('posts.html',posts=posts) 
+        if id == post_delete.author_id:
+            
+          try:
+                db.session.delete(post_delete)
+                db.session.commit()
+                flash('Comment Deleted!')
+
+                posts = Post.query.order_by(Post.date)
+                return render_template('posts.html',posts=posts) 
+        
+          except:
+                flash('Some mistakes happened, try again.') 
+                posts = Post.query.order_by(Post.date)
+                return render_template('posts.html',posts=posts) 
+      
+        else:
+              flash('Only the Poster Can Delete this Comment.')
+              posts = Post.query.order_by(Post.date)
+              return render_template('posts.html',posts=posts) 
        
 
 @app.route("/user_remove/<int:id>")
@@ -246,7 +247,7 @@ def update(id):
       if request.method == 'POST':
           user_update.username = request.form['username']
           user_update.email = request.form['email']
-          user_update.image_file = request.files['image_file']
+          # user_update.image_file = request.files['image_file']
 
           if request.files['image_file']:
             user_update.image_file = request.files['image_file']
@@ -259,7 +260,7 @@ def update(id):
             try:
               db.session.commit()
               saver.save(os.path.join(app.config['UPLOAD_FOLDER'],pic_name))
-              flash('Profile Updated!') 
+              flash('Profile Info and Avatar Updated!') 
               return render_template('update.html',
               form = form, user_update=user_update) 
             except:
@@ -268,7 +269,11 @@ def update(id):
               form = form, user_update=user_update)
 
           else:
-              flash('Please upload a pic!')    
+              user_update.username = request.form['username']
+              user_update.email = request.form['email']   
+              user_update.image_file = user_update.image_file
+              db.session.commit()
+              flash('Profile info changed!')
               return render_template('update.html',
               form = form, user_update=user_update)
       else:

@@ -15,6 +15,13 @@
             </div>
           </div>
          {% endfor %} 
+         {% for error in form.password.errors %}
+         <div class="alert alert-danger d-flex align-items-left" role="alert">
+          <div>
+            {{ error }}
+          </div>
+        </div>
+       {% endfor %} 
          {% for message in get_flashed_messages() %} 
           <div class="alert alert-warning alert-dismissible fade show" role="alert">
               {{ message }}
