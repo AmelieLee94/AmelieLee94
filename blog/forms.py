@@ -13,11 +13,6 @@ class RegistrationForm(FlaskForm):
   image_file = FileField('Profile')
   submit = SubmitField('Submit')
   
-  # def validate_username(self, username):
-  #   user = User.query.filter_by(username=username.data).first()
-  #   if user is not None:
-  #     raise ValidationError('Username already exist. Please choose a different one.')
-
   
   def validate_password(self, password):
     user = User.query.filter_by(password=password.data).first()
@@ -29,17 +24,6 @@ class LoginForm(FlaskForm):
   password = PasswordField('Password',validators=[DataRequired(),Length(min=8, max=80)])
   remember = BooleanField('remember me')
   submit = SubmitField('Login')
-
-# class ResetRequestForm(FlaskForm):
-#   username = StringField('Username',validators=[DataRequired(),Length(min=4, max=15)])    
-#   key = StringField('Key',validators=[DataRequired()])    
-#   email = EmailField('Email Address', validators=[DataRequired(), Email()])
-#   submit = SubmitField('Sumbit')  
-
-# class ResetPasswordForm(FlaskForm):
-#   password = PasswordField('Password',validators=[DataRequired(),EqualTo('password_confirm',message='Passwords Must Match!'),Length(min=8, max=80)])
-#   password_confirm = PasswordField('Confirm Password',validators=[DataRequired()])
-#   submit = SubmitField('Submit')  
 
 class PostForm(FlaskForm):
   title = StringField('Title',validators=[DataRequired()])

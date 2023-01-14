@@ -15,6 +15,7 @@ from werkzeug.utils import secure_filename
 from itsdangerous import URLSafeTimedSerializer as Serializer
 import uuid as uuid
 import os
+from sqlalchemy import desc
 
 @app.route('/')
 def fl():
@@ -23,13 +24,13 @@ def fl():
 @app.route("/home",methods=['GET','POST'])
 @login_required
 def home():        
-  users_list = User.query.order_by(User.date)  
+  users_list = User.query.order_by(desc(User.date))
   id = current_user.id
   if id == 11:
     return render_template('home.html',users_list=users_list)
   else:
       flash('Only Admin can operate.')
-  return redirect(url_for('404'))  
+  return render_template('404.html') 
 
 @app.route("/admin")
 @login_required
@@ -164,7 +165,7 @@ def add_post():
 
 @app.route('/posts')
 def posts():
-  posts = Post.query.order_by(Post.date)
+  posts = Post.query.order_by(desc(Post.date))
   return render_template('posts.html',posts=posts)  
 
 @app.route("/post/<int:post_id>")
@@ -190,7 +191,7 @@ def edit_post(post_id):
         return render_template('edit_post.html',form=form)
       else:
         flash('You are not authorized to edit this comment.')  
-        posts = Post.query.order_by(Post.date)
+        posts = Post.query.order_by(desc(Post.date))
         return render_template('posts.html',posts=posts)
 
 @app.route("/post/delete/<int:post_id>")
@@ -199,7 +200,7 @@ def delete_post(post_id):
       id = current_user.id
       if post_delete.comment:
         flash('Can not delete a post with comments!')
-        posts = Post.query.order_by(Post.date)
+        posts = Post.query.order_by(desc(Post.date))
         return render_template('posts.html',posts=posts)
       else:
         if id == post_delete.author_id:
@@ -209,17 +210,17 @@ def delete_post(post_id):
                 db.session.commit()
                 flash('Comment Deleted!')
 
-                posts = Post.query.order_by(Post.date)
+                posts = Post.query.order_by(desc(Post.date))
                 return render_template('posts.html',posts=posts) 
         
           except:
                 flash('Some mistakes happened, try again.') 
-                posts = Post.query.order_by(Post.date)
+                posts = Post.query.order_by(desc(Post.date))
                 return render_template('posts.html',posts=posts) 
       
         else:
               flash('Only the Poster Can Delete this Comment.')
-              posts = Post.query.order_by(Post.date)
+              posts = Post.query.order_by(desc(Post.date))
               return render_template('posts.html',posts=posts) 
        
 
@@ -232,12 +233,12 @@ def remove_user(id):
             db.session.commit()
             flash('User Deleted!')
 
-            users_list = User.query.order_by(User.date) 
+            users_list = User.query.order_by(desc(User.date)) 
             return render_template('home.html',form=form, users_list=users_list) 
      
       except:
             flash('Some mistakes happened, try again.') 
-            users_list = User.query.order_by(User.date) 
+            users_list = User.query.order_by(desc(User.date)) 
             return render_template('home.html',form=form, users_list=users_list) 
      
 @app.route("/update/<int:id>",methods=['GET', 'POST'])
@@ -287,7 +288,7 @@ def search():
       if form.validate_on_submit():
             post.searched = form.searched.data
             posts = posts.filter(Post.content.like('%'+ post.searched + '%'))
-            posts = posts.order_by(Post.title).all()
+            posts = posts.order_by(desc(Post.date)).all()
             return render_template('search.html',form=form,searched=post.searched,posts=posts)
       else:
             flash('You do not input search keywords.')

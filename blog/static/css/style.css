@@ -96,11 +96,17 @@ strong,span{
 #social-links a{
   margin: 0 10px;
 }
-#edit-intro{
-  display: block;
-  color:#097bbf;
-  font-family: 'Nunito', sans-serif;
+
+#linkedin:hover{
+  background-color:#097bbf;
+  opacity: 70%;
 }
+#gitlab:hover{
+  background-color:#097bbf;
+  opacity: 70%;
+}
+
+
 .fab{
   font-size: 1.1em;
 }
