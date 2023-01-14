@@ -16,7 +16,6 @@ class Post(db.Model):
   content = db.Column(db.String(255), nullable=False)
   image_file = db.Column(db.String(40), default='default.jpg')
   author_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-  slug = db.Column(db.String(255))
   comment = db.relationship('Comment', backref='post', passive_deletes=True, lazy=True)
 
   def __repr__(self):
