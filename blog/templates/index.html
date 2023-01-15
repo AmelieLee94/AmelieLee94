@@ -20,7 +20,7 @@
   </head>
 <body>  
  
-  <div id="inner-nav"></div>
+  <div id="inner-nav">
   <div id="container">
       <div id="profile">
         <div id="image">
@@ -28,7 +28,6 @@
       </div>
       <br/>
           <p id="name" class="mb-2">Li Min<br><span id="email">LiM83@cardiff.ac.uk</span></p>
-          <br/>
           <p id="designation">Product Manager<br><span id="college">Served as IT Consultant, Product Manger and Product Operation in Joyy Inc Technology Co. LTD, Beijing ByteDance Network Technology and TalkWeb Network Technology Co., LTD.</span></p>
           <div id="social-links"><a id="linkedin" href="https://www.linkedin.com/in/%E6%95%8F-%E6%9D%8E-441283254/"><i class="fab fa-linkedin-in stroke-transparent"></i></a><a id="gitlab" href="https://git.cardiff.ac.uk/c22094835"><i class="fab fa-github stroke-transparent"></i></a></div>
           <br/>
@@ -75,17 +74,17 @@
 
       </div>
       <div id="info-cards">
-        <div class="card">
+        <div class="card" id="edu">
             <p><i class="fas fa-graduation-cap stroke-transparent"></i>&nbsp;&nbsp;&nbsp;Education</p>
             <ul>
-                <li><p class="tags">Cardiff University<br><span>Master of Computing <br/><i>Relevant subjects: Fundamental of Programming, Algorithm, Data Structure</i> <br/><span>Sep. 2022 - Now</span></span></p>
+                <li><p class="tags">Cardiff University<br><span>Master of Computing <br/><i>Relevant subjects: Fundamental of Programming, Algorithm, Data Structure, Database and Modeling</i> <br/><span>Sep. 2022 - Now</span></span></p>
                 <li><p class="tags">Guangdong University of Foreign Study<br><span>Bachelor of International Trade and Bussiness <br/><i>•	Overall GPA: 3.63/4, Average Score: 86.61/100
                     <br/>Relevant subjects: Accounting, Calculus, Statistics, Website Design.
                 </i> <br/><span>Sep. 2013 - Jun 2017</span></span></p>
                    
             </ul>
         </div>
-          <div class="card">
+          <div class="card" id="workexp">
               <p><i class="fas fa-briefcase stroke-transparent"></i>&nbsp;&nbsp;&nbsp;Work Experience</p>
               <ul>
                   <li><p class="tags">Media Operation Assistant, Guangzhou UC Tech Co Ltd., China<br><span>Media Operations Assistant | Guangzhou UC Tech<br/><span>Jan 2017 - Apr 2018</span></span></p>
@@ -97,7 +96,7 @@
                   <li><p class="tags">TalkWeb Network Technology Co., LTD, China<br><span>Technical Support Engineer | TalkWeb Network Technology<br/><span>Mar 2021 - Jul 2022</span></span></p>
               </ul>
           </div>
-          <div class="card">
+          <div class="card" id="proj">
             <p><i class="fas fa-briefcase stroke-transparent"></i>&nbsp;&nbsp;&nbsp;Projects</p>
             <ul>
             <li><p class="tags">Built portfolio website<br><span>Built dynamic portfolio website with python flask, mysql database, bootstrap, javascript, html and css | <span>Dec 2022 - Jan 2023</span></span></p>
@@ -105,6 +104,7 @@
                 <br/>•	Wrote 100+ test cases for the delivery function of a To B platform to ensure the realization of the delivery data visualization dashboard. Worked with the R&D Team to test the test samples and found 10+ errors.</span></p>
                 </ul>
         </div>
+        
             <a href="#maodian"><i class="scroll-up" id="scroll-up"
             ><img
               src="../static/icons/icons8-upward-arrow.png"
@@ -112,7 +112,15 @@
               alt="scroll-up"
             /></i></a>
       </div>
+      <div id="side-nav" class="bd-toc text-body-secondary offcanvas-end float-right">
+        <strong class="d-none d-md-block h6">On this page</strong><br/>
+        <div class="mb-3 sidenav-title"><a href="#edu" class="text-muted">Education</a></div>
+      <div class="mb-3 sidenav-title"><a href="#workexp" class="text-muted">Work Experience</a></div>
+        <div class="sidenav-title"><a href="#proj" class="text-muted">Projects</a></div>
+        </div>
+      </div>
   </div>
+   
     <!-- Website scripts
     <script src="../static/js/app.js"></script> -->
   

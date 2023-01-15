@@ -14,10 +14,10 @@
 {% for post in posts %}
 <div class="card p-1 mb-3 rounded">
     <div class="card-body">
+    <span class="fs-3">user:&ensp;{{ post.user.username }}</span>
+    <br/><span class="text-muted">{{ post.date }} </span>
     <p class="fs-3">{{ post.title }}</p>
-    <span class="text-muted">{{ post.date }} </span>
-    <br/><br/>
-    {{ post.content|safe }}<br/> 
+  {{ post.content|safe }}<br/> 
     <br/>
     <br/>
     {% if post.author_id == current_user.id %}
