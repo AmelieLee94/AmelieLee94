@@ -18,7 +18,7 @@ hr{
   flex: 15%;
   display: block;
   position: relative;
-  margin: 5% 2% 0 10%;
+  margin: 5% 2% 0 7%;
   width: 100%;
   height: 100%;
 }
@@ -26,10 +26,29 @@ hr{
   flex: 55%;
   display: block;
   margin-top: 5%;
-  margin-right: 10%;
+  margin-right: 15%;
   width: 100%;
   height: 100%;
 }
+#side-nav{
+  flex: 10%;
+  display: block;
+  margin-top: 5%;
+  margin-right: 2%;
+  right:1rem;
+  width: 10%;
+  height: 100%;
+  position: fixed;
+}
+
+#side-nav a { 
+  list-style-type: none; 
+}
+
+#side-nav a:hover {
+  background-color: rgb(234, 228, 218)
+}
+
 #image{
   position: relative;
   overflow: hidden;
@@ -210,3 +229,4 @@ strong,span{
       margin-bottom: 30px;
   }
 }
+
