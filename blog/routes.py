@@ -32,16 +32,6 @@ def home():
       flash('Only Admin can operate.')
   return render_template('404.html') 
 
-@app.route("/admin")
-@login_required
-def admin():
-  id = current_user.id
-  if id == 11:
-    return render_template('admin.html')  
-  else:
-    flash('Only Admin can operate.')
-    return redirect(url_for('dashboard'))  
-
 @app.route("/index")
 def index():
   posts=Post.query.all()
@@ -56,8 +46,10 @@ def register():
     username = User.query.filter_by(username=form.username.data).first() 
     if user:
       flash('Email Already Used by Other User!')
+      return render_template('register.html',title='Register',form=form)
     elif username:
       flash('Username Already Used by Other User!')
+      return render_template('register.html',title='Register',form=form)
     elif user is None and username is None:
       user = User(username=form.username.data, email=form.email.data, password=form.password.data)
       db.session.add(user)
@@ -68,9 +60,10 @@ def register():
       form.password.data = ''
       
       flash('Registration successful!')          
-  users_list = User.query.order_by(User.id)  
-  # return redirect(url_for('registered'))
-  return render_template('register.html',title='Register',form=form,users_list=users_list)
+      login_user(user)
+      flash('You\'ve successfully logged in,'+' '+ current_user.username +'!')
+      return redirect(url_for('dashboard'))
+  return render_template('register.html',title='Register',form=form)
 
 @app.route("/registered")
 def registered():
