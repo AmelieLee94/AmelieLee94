@@ -65,10 +65,6 @@ def register():
       return redirect(url_for('dashboard'))
   return render_template('register.html',title='Register',form=form)
 
-@app.route("/registered")
-def registered():
-  return render_template('registered.html', title='Thanks!')
-
 @app.route("/login",methods=['GET','POST'])
 def login():
   form = LoginForm()
@@ -87,26 +83,6 @@ def logout():
   flash('You\'re now logged out. Thanks for your visit!')
   return render_template('logout.html')
 
-# @app.route("/reset_request",methods=['GET','POST'])
-# def reset_request():
-#   form=ResetRequestForm()
-#   if form.validate_on_submit():
-#         user = User.query.filter_by(email=form.email.data).first()
-#         if user:
-#           if user.username == form.username.data and user.key == form.key.data:    
-#               flash('Please change your password.')
-#               return redirect(url_for('change_password'))
-#           elif user.username != form.username.data:
-#               flash('Invalid Username. Please check again!')
-#               return render_template('reset_request.html',title='reset request',form=form,legend='Reset Password')  
-#           elif user.key != form.key.data:
-#               flash('Invalid Key! Please check again!')
-#               return render_template('reset_request.html',title='reset request',form=form,legend='Reset Password')  
-#         else:
-#           flash('Email does not exist. Please check again!')  
-#   return render_template('reset_request.html',title='reset request',form=form,legend='Reset Password')
-
-
 # def send_mail(user):
 #     token=user.get_token()
 #     msg=Message('Password Reset Request',recipients=[user.email],sender='donoreply@limin.com')
@@ -115,24 +91,6 @@ def logout():
 #     If you have recieve email before. Please ignore this message.
 #     '''
 # #     mail.send(msg)
-
-# @app.route("/change_password",methods=['GET','POST'])
-# def change_password():
-#     form=ResetPasswordForm()     
-#     if form.validate_on_submit():   
-#       user = User(password=form.password.data)
-#       email = User.email
-#       key = User.key
-      
-#       db.session.add(user)
-#       db.session.commit()
-#       form.password.data = ''
-#       form.password_confirm.data = ''
-#       flash('Password changed! Please Log in')
-#       return redirect(url_for('login'))
-#     else:
-#           flash('Please input new password!')
-#           return render_template('change_password.html',form=form)
 
 @app.route("/dashboard",methods=['GET','POST'])
 @login_required
@@ -154,7 +112,10 @@ def add_post():
       db.session.commit()
 
       flash('Comment Post Successfully!')
-  return render_template('Add_Post.html', form=form)  
+      return redirect(url_for("posts"))  
+
+  else: 
+     return render_template('Add_Post.html', form=form)  
 
 @app.route('/posts')
 def posts():
@@ -196,7 +157,7 @@ def delete_post(post_id):
         posts = Post.query.order_by(desc(Post.date))
         return render_template('posts.html',posts=posts)
       else:
-        if id == post_delete.author_id:
+        if id == post_delete.author_id or id==11:
             
           try:
                 db.session.delete(post_delete)
@@ -221,19 +182,24 @@ def delete_post(post_id):
 def remove_user(id):
       form = RegistrationForm()
       user_to_remove = User.query.get_or_404(id)
-      try:
-            db.session.delete(user_to_remove)
-            db.session.commit()
-            flash('User Deleted!')
+      if user_to_remove.comment or user_to_remove.post:
+            flash('Can not delete user who has posted content!')
+            users_list = User.query.order_by(desc(User.date)) 
+            return render_template('home.html',form=form, users_list=users_list)
+      else:      
+        try:
+              db.session.delete(user_to_remove)
+              db.session.commit()
+              flash('User Deleted!')
 
-            users_list = User.query.order_by(desc(User.date)) 
-            return render_template('home.html',form=form, users_list=users_list) 
-     
-      except:
-            flash('Some mistakes happened, try again.') 
-            users_list = User.query.order_by(desc(User.date)) 
-            return render_template('home.html',form=form, users_list=users_list) 
-     
+              users_list = User.query.order_by(desc(User.date)) 
+              return render_template('home.html',form=form, users_list=users_list) 
+      
+        except:
+              flash('Some mistakes happened, try again.') 
+              users_list = User.query.order_by(desc(User.date)) 
+              return render_template('home.html',form=form, users_list=users_list) 
+      
 @app.route("/update/<int:id>",methods=['GET', 'POST'])
 def update(id):
       form = RegistrationForm()
@@ -309,8 +275,8 @@ def create_comment(post_id):
 @login_required
 def delete_comment(comment_id):
     comment = Comment.query.filter_by(id=comment_id).first()
-    if current_user.id != comment.author_id and current_user !=comment.post.author_id:
-          flash('Only who commented or replied can delete their own content!')
+    if current_user.id != comment.author_id and current_user.id !=comment.post.author_id:
+          flash('Only who commented/replied can delete their own content!')
     elif not comment:
           flash('Reply does not exist anymore.')
     else:

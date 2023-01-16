@@ -7,24 +7,72 @@
     <div class="card-body">
         <div calss="">
             {% if post.user.image_file %}
-            <img src="{{ url_for('static',filename='img/' + post.user.image_file)  }}" class="rounded-circle shadow-4-strong" width="80">
+            <img src="{{ url_for('static',filename='img/' + post.user.image_file)  }}" width="80">
             {% else %}
-            <img src="{{ url_for('static',filename='img/default.jpg')  }}" class="rounded-circle shadow-4-strong" width="80">
+            <img src="{{ url_for('static',filename='img/default.jpg')  }}" width="80">
             {% endif %}
             <span class="fs-3">&ensp; {{ post.user.username }}</span>&ensp;<br/>&ensp;<span class="text muted">{{ post.date }}</span>
             </div>
-    <span class="fs-4">{{ post.title }}</span><br/>
-    <p>{{ post.content|safe }}</p>
- 
-    {% if post.author_id == current_user.id %}
-    <a href="{{ url_for('posts')}}" class="btn btn-outline-secondary">Back to Comment List >></a>
-    <a href="{{ url_for('edit_post',post_id=post.id)}}" class="btn btn-outline-secondary">Edit Comment</a>
-    <a href="{{ url_for('delete_post',post_id=post.id)}}" class="btn btn-outline-danger">Delete Comment</a>  
+            <br/>
+            <span class="fs-5">&ensp;{{ post.title }}</span><br/>
+            <div>&ensp;&ensp;{{ post.content|safe }}</div>
+     <br/>
+    {% if post.author_id == current_user.id or current_user.id==11 %}
+    <div class=".btn-group">
+      &ensp;&ensp;&ensp;&ensp;&ensp;
+    <a href="{{ url_for('edit_post',post_id=post.id)}}" class="text-decoration-none">Edit</a>
+    &ensp;&ensp;
+    <a href="{{ url_for('delete_post',post_id=post.id)}}" class="text-decoration-none text-danger" onclick="return confirm('Are you sure to delete this comment?');">Delete</a>
+  </div>
     {% else %} 
-    <a href="{{ url_for('posts')}}" class="btn btn-outline-secondary">Back to Comment List >></a>
+    <a href="{{ url_for('post',post_id=post.id)}}" class="text-decoration-none text-secondary">View detail</a>
     {% endif %}
+    <br/>
+    <div class="collapese" id="comments-{{post.id}}">
+      <div class="card mt-2">
+        <div class="card-body" id="comments-expanded-{{post.id}}">
+          <p class="border-bottom text-muted">Replies are Shown here</p>
+          {% for c in post.comment %}
+          <div class="d-flex justify-content-start align-items-center border-bottom">
+            <div class="mb-1">
+              <div class="d-flex align-items-left">
+              <div calss="mt-2">
+                {% if c.user.image_file %}
+                <img src="{{ url_for('static',filename='img/' + c.user.image_file)  }}" width="30">
+                {% else %}
+                <img src="{{ url_for('static',filename='img/default.jpg')  }}" width="30">
+                {% endif %}
+                </div>
+                &ensp;&ensp;{{c.user.username}}
+              </div>
+              <div><small class='text-muted'>{{c.date}}</small></div>
+               <div>{{c.text}}</div>
+               {% if c.author_id == current_user.id or current_user.id==11 %}
+               <div class="btn-group">
+                &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+                <a href="/delete-comment/{{c.id}}" class="text-decoration-none text-danger small" onclick="return confirm('Are you sure to delete this reply?');" >Delete</a>
+                </div>
+                {% else %}
+                {% endif %}
+              </div>   
+              </div>
+          {% endfor %}   
+      </div>
+      </div>
+    </div>
+    <br/>
+    <br/>
+    {% if current_user.is_authenticated %}
+     <form class="input-group mb-3" method="POST" action="create-comment/{{ post.id }}" >
+      <input type="text" id="text" name="text" class="form-control" placeholder="Leave your reply!">
+      <button type="submit" class="btn btn-primary">Reply</button>
+      {{ form.hidden_tag() }}
+     </form>
+     {% else %}
+     {% endif %}
+    <br/>
+    <br/>
 </div>
 </div>
- 
 
 {% endblock content %}
