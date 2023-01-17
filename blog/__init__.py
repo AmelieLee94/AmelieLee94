@@ -19,6 +19,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://c22094835:Li12345678@cs
 
 UPLOAD_FOLDER = './blog/static/img/'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['MAX_CONTENT_LENGTH'] = 1 * 1024 * 1024
 
 ckeditor = CKEditor(app)
 db = SQLAlchemy(app)
