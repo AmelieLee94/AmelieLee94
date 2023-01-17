@@ -69,7 +69,7 @@
               </div>
               <div><small class='text-muted'>{{c.date}}</small></div>
                <div>{{c.text}}</div>
-               {% if c.author_id == current_user.id or current_user.id==11 %}
+               {% if c.author_id == current_user.id or current_user.id==post.author_id or current_user.id==11 %}
                <div class="btn-group">
                 &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
                 <a href="/delete-comment/{{c.id}}" class="text-decoration-none text-danger small" onclick="return confirm('Are you sure to delete this reply?');" >Delete</a>
