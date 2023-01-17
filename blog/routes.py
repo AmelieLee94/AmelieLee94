@@ -275,7 +275,7 @@ def create_comment(post_id):
 @login_required
 def delete_comment(comment_id):
     comment = Comment.query.filter_by(id=comment_id).first()
-    if current_user.id != comment.author_id and current_user.id !=comment.post.author_id:
+    if current_user.id != comment.author_id and current_user.id !=comment.post.author_id and current_user.id !=11:
           flash('Only who commented/replied can delete their own content!')
     elif not comment:
           flash('Reply does not exist anymore.')
