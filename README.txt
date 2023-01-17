@@ -1,7 +1,6 @@
 Student Number: c22094845
 
-Deployed Link:
-http://c-22094835-cmt-120-cw-2-git-c22094835-cmt120-cw2.apps.openshift.cs.cf.ac.uk/
+Deployed Link:  http://c-22094835-cmt-120-cw-2-git-c22094835-cmt120-cw2.apps.openshift.cs.cf.ac.uk/
 
 Reference:
 
