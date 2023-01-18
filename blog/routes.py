@@ -10,7 +10,7 @@ from sqlalchemy.orm import sessionmaker
 import smtplib
 from sqlalchemy import create_engine
 from flask_wtf import FlaskForm
-from flask_ckeditor import CKEditor
+from flask_ckeditor import CKEditor, upload_success, upload_fail
 from werkzeug.utils import secure_filename
 from itsdangerous import URLSafeTimedSerializer as Serializer
 import uuid as uuid
@@ -38,7 +38,8 @@ def index():
   return render_template('index.html',posts=posts)  
 
 # Code to register and log in
-# Adpated from flask exercise CMT120 / Flask Documentation(1.1x)
+# Adpated from flask exercise CMT120 / Flask Documentation(1.1x) 
+# https://flask-login.readthedocs.io/en/latest/
 
 @app.route("/register",methods=['GET','POST'])
 def register():
@@ -102,10 +103,11 @@ def dashboard():
   return render_template('dashboard.html')
 
 # Post upload/delete/edit, upload file, and search content
-# Adapted from Youtube channel Codemy.com Flask Friday  and Flask Documentation(1.1x)
+# Adapted from Youtube channel Codemy.com Flask Friday and Flask Documentation(1.1x) and Flask Advanced Usage
 # accessed 24-12-2022
 # https://www.youtube.com/watch?v=0Qxtt4veJIc&list=PLCC34OHNcOtolz2Vd9ZSeSXWc8Bq23yEz
 # https://flask.palletsprojects.com/en/2.0.x/patterns/fileuploads/
+# https://flask-ckeditor.readthedocs.io/en/latest/plugins.html
 
 @app.route('/add_post', methods=['GET', 'POST'])
 @login_required
@@ -227,16 +229,22 @@ def update(id):
             pic_name = str(uuid.uuid1()) + "_" + pic_filename
             saver = request.files['image_file']
             user_update.image_file = pic_name
-            try:
-              db.session.commit()
-              saver.save(os.path.join(app.config['UPLOAD_FOLDER'],pic_name))
-              flash('Profile Info and Avatar Updated!') 
-              return render_template('update.html',
-              form = form, user_update=user_update) 
-            except:
-              flash('Oops! Something went wrong. Please try again!')
-              return render_template('update.html',
-              form = form, user_update=user_update)
+            extension = pic_filename.split('.')[-1].lower()
+            if extension not in ['jpg', 'gif', 'png', 'jpeg','svg']:
+               flash('Image Only!',category='error')
+               return render_template('update.html',
+                form = form, user_update=user_update)
+            else:
+              try:
+                db.session.commit()
+                saver.save(os.path.join(app.config['UPLOAD_FOLDER'],pic_name))
+                flash('Profile Info and Avatar Updated!') 
+                return render_template('update.html',
+                form = form, user_update=user_update) 
+              except:
+                flash('Oops! Something went wrong. Please try again!')
+                return render_template('update.html',
+                form = form, user_update=user_update)
 
           else:
               user_update.username = request.form['username']

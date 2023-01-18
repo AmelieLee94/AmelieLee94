@@ -22,10 +22,10 @@
           {{ form.title(class="form-control") }}
         </div>
           <div class="input-group">
-          <h5>{{ form.content.label(class="form-label") }}</h5>
+          <h5>{{ form.content.label(class="form-label") }} (Text Only)</h5>
         </div>
           <div class="input-group mb-3">
-          {{ form.content(class="form-control",rows='5') }}
+          {{ form.content(class="form-control",rows='3') }}
         </div>
           <div class="d-grid gap-2 d-md-block">
             {{ form.submit(class=" btn btn btn-success")}}
