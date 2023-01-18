@@ -37,6 +37,8 @@ def index():
   posts=Post.query.all()
   return render_template('index.html',posts=posts)  
 
+# Code to register and log in
+# Adpated from flask exercise CMT120 / Flask Documentation(1.1x)
 
 @app.route("/register",methods=['GET','POST'])
 def register():
@@ -82,6 +84,8 @@ def logout():
   logout_user()
   flash('You\'re now logged out. Thanks for your visit!')
   return render_template('logout.html')
+# end of referenced code
+
 
 # def send_mail(user):
 #     token=user.get_token()
@@ -96,6 +100,12 @@ def logout():
 @login_required
 def dashboard():
   return render_template('dashboard.html')
+
+# Post upload/delete/edit, upload file, and search content
+# Adapted from Youtube channel Codemy.com Flask Friday  and Flask Documentation(1.1x)
+# accessed 24-12-2022
+# https://www.youtube.com/watch?v=0Qxtt4veJIc&list=PLCC34OHNcOtolz2Vd9ZSeSXWc8Bq23yEz
+# https://flask.palletsprojects.com/en/2.0.x/patterns/fileuploads/
 
 @app.route('/add_post', methods=['GET', 'POST'])
 @login_required
@@ -253,6 +263,13 @@ def search():
             flash('You do not input search keywords.')
             return render_template('search.html',form=form)
 
+# end of referenced code
+
+# Comment create/delete/
+# Adapted from Youtube channel Tech with Tim
+# accessed 10-01-2023
+# https://www.youtube.com/watch?v=M_OKJnIdYeU
+
 @app.route("/create-comment/<post_id>",methods=['GET','POST'])
 @login_required
 def create_comment(post_id):
@@ -284,6 +301,7 @@ def delete_comment(comment_id):
          db.session.commit() 
          flash('Reply deleted!')
     return redirect(url_for("posts"))
+# end of referenced code
 
 @app.context_processor
 def base():

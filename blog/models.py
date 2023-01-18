@@ -9,6 +9,8 @@ from itsdangerous import URLSafeTimedSerializer as Serializer
 def load_user(user_id):
       return Users.query.get(int(user_id))
 
+# Post Model
+# Adpated from flask exercise CMT120  
 class Post(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
@@ -20,6 +22,12 @@ class Post(db.Model):
 
   def __repr__(self):
     return f"Post('{self.date}', '{self.title}', '{self.content}')"
+# end of referenced code
+
+# Comment Model
+# Adapted from Youtube channel Tech with Tim
+# accessed 10-01-2023
+# https://www.youtube.com/watch?v=M_OKJnIdYeU
 
 class Comment(UserMixin,db.Model):
   id = db.Column(db.Integer, primary_key=True)
@@ -27,6 +35,8 @@ class Comment(UserMixin,db.Model):
   text = db.Column(db.Text,nullable=False)
   author_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
   post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
+
+# end of referenced code
 
   def get_token(self,expires_sec='300'):
         serial=Serializer(app.config['SECRET_KEY'])
@@ -44,6 +54,8 @@ class Comment(UserMixin,db.Model):
   def __repr__(self):
     return f"User('{self.username}', '{self.email}','{self.password_hash}')"
 
+# User Model
+# Adpated from flask exercise CMT120  
 class User(UserMixin,db.Model):
   id = db.Column(db.Integer, primary_key=True)
   date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
@@ -53,6 +65,7 @@ class User(UserMixin,db.Model):
   password_hash = db.Column(db.String(128), nullable=False)
   post = db.relationship('Post', backref='user',passive_deletes=True, lazy=True)
   comment = db.relationship('Comment', backref='user', passive_deletes=True, lazy=True)
+# end of referenced code
 
 #adated from Grinberg(2014, 2018)
   @property

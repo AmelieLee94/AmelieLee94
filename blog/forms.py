@@ -4,7 +4,7 @@ from wtforms.validators import InputRequired, Email, DataRequired, EqualTo, Vali
 from blog.models import User
 from flask_wtf.file import FileField, FileAllowed, FileRequired
 from flask_ckeditor import CKEditorField
-
+# Adpated from flask exercise CMT120  
 class RegistrationForm(FlaskForm):
   username = StringField('Username',validators=[DataRequired(),Regexp('^[0-9A-Za-z]{4,8}$',message='Your username should be 4-8 characters long, and can not contain symbols.')])
   email = EmailField('Email Address', validators=[DataRequired(), Email()])
@@ -29,6 +29,7 @@ class PostForm(FlaskForm):
   title = StringField('Title',validators=[DataRequired()])
   content = CKEditorField('Content',validators=[DataRequired()])
   submit = SubmitField('Submit')
+# end of referenced code
 
 class CommentForm(FlaskForm):
   text = StringField('text',validators=[DataRequired()])
