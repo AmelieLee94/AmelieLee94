@@ -15,7 +15,7 @@
  <div class="col-lg-5 bg-white m-auto rounded-top wrapper">
     <h2 class="text-center pt-3">Add Comment</h2>
     <p class="text-center text-muted lead">Leave your opinion here</p>        
-   <form method="POST">
+   <form method="POST" enctype="multipart/form-data">
     <div class="input-group">
       <div>
       {{ form.hidden_tag() }}
