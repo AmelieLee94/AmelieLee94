@@ -5,6 +5,7 @@ from flask_login import LoginManager
 from flask_ckeditor import CKEditor
 from werkzeug.middleware.proxy_fix import ProxyFix
 from flask_wtf.csrf import CSRFProtect
+import os
 
 app = Flask(__name__)
 
@@ -21,6 +22,23 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://c22094835:Li12345678@cs
 UPLOAD_FOLDER = './blog/static/img/'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 1 * 1024 * 1024
+
+app.config['CKEDITOR_SERVE_LOCAL'] = False
+app.config['CKEDITOR_HEIGHT'] = 400
+app.config['CKEDITOR_FILE_UPLOADER'] = 'upload'
+basedir = './blog/upload/'
+app.config['UPLOADED_PATH'] = os.path.join(basedir, 'uploads')
+
+# app.config.update(
+#     SESSION_COOKIE_SECURE=True,
+#     SESSION_COOKIE_HTTPONLY=True,
+#     SESSION_COOKIE_SAMESITE='Lax',
+# )
+
+
+# app.config.update(
+#     PERMANENT_SESSION_LIFETIME=600
+# )
 
 ckeditor = CKEditor(app)
 db = SQLAlchemy(app)

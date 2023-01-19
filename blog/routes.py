@@ -69,7 +69,7 @@ def register():
   return render_template('register.html',title='Register',form=form)
 
 @app.route("/login",methods=['GET','POST'])
-def login():
+def login():    
   form = LoginForm()
   if form.validate_on_submit():
     user = User.query.filter_by(username=form.username.data).first()
@@ -147,6 +147,7 @@ def edit_post(post_id):
       if form.validate_on_submit():
             post.title = form.title.data
             post.content = form.content.data
+
             db.session.add(post)
             db.session.commit()
             flash('Comment Has Been Successfully Updated!')
@@ -258,6 +259,24 @@ def update(id):
             return render_template('update.html',
             form = form, user_update=user_update)
 
+
+@app.route('/files/<path:filename>')
+def uploaded_files(filename):
+    path = '/the/uploaded/directory'
+    return send_from_directory(path, filename)
+
+@app.route('/upload', methods=['POST'])
+def upload():
+    f = request.files.get('upload')  
+    # Add more validations here
+    extension = f.filename.split('.')[1].lower()
+    if extension not in ['jpg', 'gif', 'png', 'jpeg','svg']:  
+        return upload_fail(message='Image only!')  
+    f.save(os.path.join('/the/uploaded/directory', f.filename))
+    url = url_for('uploaded_files', filename=f.filename)
+    return upload_success(url=url) 
+
+
 @app.route("/search",methods=['GET', 'POST'])
 def search():
       form = SearchForm()
@@ -282,7 +301,6 @@ def search():
 @login_required
 def create_comment(post_id):
   text = request.form.get('text')
-  print(text)
   if not text:
       flash('Content can not be empty!',category='error')
   else: 
