@@ -259,6 +259,7 @@ def update(id):
             return render_template('update.html',
             form = form, user_update=user_update)
 
+# Adpated from stackoverflow flask upload image file https://stackoverflow.com/questions/50555668/flask-admin-ckeditor-image-upload
 
 @app.route('/files/<path:filename>')
 def uploaded_files(filename):

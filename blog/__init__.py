@@ -23,6 +23,7 @@ UPLOAD_FOLDER = './blog/static/img/'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 1 * 1024 * 1024
 
+# Adpated from stackoverflow flask upload image file https://stackoverflow.com/questions/50555668/flask-admin-ckeditor-image-upload
 app.config['CKEDITOR_SERVE_LOCAL'] = False
 app.config['CKEDITOR_HEIGHT'] = 400
 app.config['CKEDITOR_FILE_UPLOADER'] = 'upload'
