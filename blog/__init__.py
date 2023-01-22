@@ -41,8 +41,9 @@ app.config['UPLOADED_PATH'] = os.path.join(basedir, 'uploads')
 # app.config.update(
 #     PERMANENT_SESSION_LIFETIME=600
 # )
-
+# Adpated from Flask-CKEditor Documentation
 ckeditor = CKEditor(app)
+# Adpated from flask exercise CMT120 
 db = SQLAlchemy(app)
 # Import bootstrap , code adapted from https://getbootstrap.com/docs/4.6/getting-started/introduction/
 Bootstrap4(app)
