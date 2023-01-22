@@ -6,7 +6,7 @@ from flask_ckeditor import CKEditor
 from werkzeug.middleware.proxy_fix import ProxyFix
 from flask_wtf.csrf import CSRFProtect
 import os
-
+# Adpated from flask exercise CMT120 
 app = Flask(__name__)
 # Adpated from stackoverflow X-Forwarded-Proto and Flask
 # https://stackoverflow.com/questions/23347387/x-forwarded-proto-and-flask
