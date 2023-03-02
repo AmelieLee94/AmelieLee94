@@ -13,11 +13,11 @@ app = Flask(__name__)
 app.wsgi_app = ProxyFix(app.wsgi_app)
 
 # Adpated from flask exercise CMT120  
-app.config['SECRET_KEY'] = 'd6fe0e69ea5dfaa765df73887770351883e4c8eb59555e51'
+app.config['SECRET_KEY'] = ''
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://c22094835:Li12345678@csmysql.cs.cf.ac.uk:3306/c22094835_database1'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://'
 
 # Adpated from Flask Documentation(1.1.x)
 UPLOAD_FOLDER = './blog/static/img/'
