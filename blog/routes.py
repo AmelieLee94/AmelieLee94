@@ -166,7 +166,7 @@ def delete_post(post_id):
       post_delete = Post.query.get_or_404(post_id)
       id = current_user.id
       if post_delete.comment:
-        flash('Can not delete a post with comments!')
+        flash('Can not delete a comment with replies!')
         posts = Post.query.order_by(desc(Post.date))
         return render_template('posts.html',posts=posts)
       else:
@@ -186,7 +186,7 @@ def delete_post(post_id):
                 return render_template('posts.html',posts=posts) 
       
         else:
-              flash('Only the Poster Can Delete this Comment.')
+              flash('Only the author can delete this comment.')
               posts = Post.query.order_by(desc(Post.date))
               return render_template('posts.html',posts=posts) 
        
@@ -203,7 +203,7 @@ def remove_user(id):
         try:
               db.session.delete(user_to_remove)
               db.session.commit()
-              flash('User Deleted!')
+              flash('User Account Deleted!')
 
               users_list = User.query.order_by(desc(User.date)) 
               return render_template('home.html',form=form, users_list=users_list) 
